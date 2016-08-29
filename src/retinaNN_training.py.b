@@ -134,8 +134,6 @@ checkpointer = ModelCheckpoint(filepath='./'+name_experiment+'/'+name_experiment
 labels = masks_Unet(patches_masks_train)
 print patches_imgs_train.shape
 print labels.shape
-
-
 # model.fit(patches_imgs_train, masks_Unet(patches_masks_train), nb_epoch=N_epochs, batch_size=batch_size, verbose=2, shuffle=True, validation_data=(patches_imgs_test, masks_Unet(patches_masks_test)), callbacks=[checkpointer])
 
 

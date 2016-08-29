@@ -7,6 +7,7 @@ from help_functions import visualize
 from help_functions import group_images
 
 from pre_processing import my_PreProc
+import cv2
 
 
 #To select the same images
@@ -23,7 +24,8 @@ def get_data_training(DRIVE_train_imgs_original,DRIVE_train_groudTruth, DRIVE_te
     test_masks = load_hdf5(DRIVE_test_groudTruth)
 
 
-    train_imgs = my_PreProc(train_imgs_original)
+   # train_imgs = my_PreProc(train_imgs_original)
+    train_imgs = train_imgs_original
     test_imgs = my_PreProc(test_imgs_original)
     train_masks = train_masks/255.
     test_masks = test_masks/255.
@@ -178,6 +180,17 @@ def extract_random(full_imgs,full_masks, patch_h,patch_w, N_patches, inside=True
             patch_mask = full_masks[i,:,y_center-int(patch_h/2):y_center+int(patch_h/2),x_center-int(patch_w/2):x_center+int(patch_w/2)]
             patches[iter_tot]=patch
             patches_masks[iter_tot]=patch_mask
+	    
+# kangyong
+	    w_patch = np.transpose(patch,(1,2,0))
+	    w_patch_mask = np.transpose(patch_mask,(1,2,0))
+            cv2.imwrite("/mapbar/share/unet_lane_data/images/"+str(iter_tot)+".jpg",w_patch)
+            cv2.imwrite("/mapbar/share/unet_lane_data/masks/"+str(iter_tot)+".jpg",w_patch_mask*255)
+	    tmp_ = np.reshape(w_patch_mask*255,(1,48*48))
+	    np.savetxt("/mapbar/share/unet_lane_data/labels/" +str(iter_tot)+".txt",tmp_,fmt="%d", delimiter=" ")
+	    if((iter_tot+1)%1000 == 0):
+		print iter_tot
+		break
             iter_tot +=1   #total
             k+=1  #per full_img
     return patches, patches_masks

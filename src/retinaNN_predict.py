@@ -217,7 +217,8 @@ jaccard_index = jaccard_similarity_score(y_true, y_pred, normalize=True)
 print "\nJaccard similarity score: " +str(jaccard_index)
 
 #F1 score
-F1_score = f1_score(y_true, y_pred, labels=None, average='binary', sample_weight=None)
+F1_score = f1_score(y_true, y_pred, labels=None )
+# F1_score = f1_score(y_true, y_pred, labels=None, average='binary', sample_weight=None)
 print "\nF1 score (F-measure): " +str(F1_score)
 
 #Save the results
